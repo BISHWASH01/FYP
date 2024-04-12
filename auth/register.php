@@ -2,11 +2,20 @@
 
 include '../Helpers/DatabaseConfig.php';
 
-if(isset($_POST['fullName']) && isset($_POST['email']) && isset($_POST['password'])){
+if(isset($_POST['fullName']) && 
+    isset($_POST['email']) && 
+    isset($_POST['password'])&& 
+    // isset($_POST['address'])&& 
+    isset($_POST['phoneNumber'])
+    
+    ){
+
     global $CON; 
     $email = $_POST['email'];
     $fName = $_POST['fullName'];
     $password = $_POST['password'];
+    // $address = $_POST['address'];
+    $phoneNumber = $_POST['phoneNumber'];
     
 
 
@@ -17,7 +26,7 @@ if(isset($_POST['fullName']) && isset($_POST['email']) && isset($_POST['password
     if($num > 0){
         echo json_encode(
             array(
-                "succes" => false,
+                "success" => false,
                 "message" => "email already exists!!!"
             )
             );
@@ -26,7 +35,7 @@ if(isset($_POST['fullName']) && isset($_POST['email']) && isset($_POST['password
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $insertQuery = "INSERT INTO user (fullName, email, password, role, address) VALUES ('$fName','$email','$hashed_password','user','ghar')";
+        $insertQuery = "INSERT INTO user (fullName, email, password, role, address, phoneNumber) VALUES ('$fName','$email','$hashed_password','user','ghar','$phoneNumber')";
         $insertResult = mysqli_query($CON,$insertQuery);
         
 

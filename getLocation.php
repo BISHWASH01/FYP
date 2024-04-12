@@ -7,15 +7,15 @@ include './Helpers/Authentication.php';
 
     global $CON; 
 
-    $categoryList = getCategoryList();
+    $locationList = getLocationList();
 
-        if ($categoryList != null) {
+        if ($locationList != null) {
 
             echo json_encode(
                 array(
                     "success" => true,
                     "message" => "list retrival succesfull",
-                    "categories"=>$categoryList
+                    "locations"=>$locationList
 
                 )
                 
@@ -27,9 +27,9 @@ include './Helpers/Authentication.php';
 
 
 
-function getCategoryList(){
+function getLocationList(){
     global $CON;
-    $sql="select * from category";
+    $sql="select * from location";
     $result = mysqli_query($CON, $sql);
     $num = mysqli_num_rows($result);
 
@@ -39,12 +39,12 @@ function getCategoryList(){
         while ($row = mysqli_fetch_assoc($result)) {
             
             
-            $categoryList[] = $row;
+            $locationList[] = $row;
 
 
         }
 
-        return $categoryList;
+        return $locationList;
     }
 
 

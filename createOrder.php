@@ -14,7 +14,7 @@ if (!isset($_POST['token'])) {
     die();
 }
 
-if (!isset($_POST['cart'])||!isset($_POST['total'])) {
+if (!isset($_POST['productID'])||!isset($_POST['total'])) {
     echo json_encode(
         array(
             "success" => false,
@@ -26,33 +26,33 @@ if (!isset($_POST['cart'])||!isset($_POST['total'])) {
 global $CON;
 
 $token = $_POST['token'];
-$cart = $_POST['cart'];
+$productID = $_POST['productID'];
 $total = $_POST['total'];
 $userID = getUserID($token);
 
-$sql = "INSERT INTO ordersmade (userID, total) VALUES ('$userID','$total')";
+$sql = "INSERT INTO ordersmade (userID, total,productID) VALUES ('$userID','$total','$productID')";
 
 $result = mysqli_query($CON,$sql);
 
 if ($result) {
     $orderID = mysqli_insert_id($CON);
     
-    $cartList = json_decode($cart);
+    // $cartList = json_decode($cart);
 
-    foreach($cartList as $cartItem){
-        $product = $cartItem->product;
+    // foreach($cartList as $cartItem){
+    //     $product = $cartItem->product;
 
-        $quantity = $cartItem->quantity;
+    //     $quantity = $cartItem->quantity;
 
-        $price = $product-> price;
+    //     $price = $product-> price;
 
-        $linetotal = $quantity * $price;
+    //     $linetotal = $quantity * $price;
 
-        $productID = $product->productId;
+    //     $productID = $product->productId;
 
-        $sql = "INSERT INTO orderdetails (orderID,productID,quantity,lineTotal) VALUES('$orderID','$productID','$quantity','$linetotal')";
-        $result=mysqli_query($CON,$sql);
-    }
+    //     $sql = "INSERT INTO orderdetails (orderID,productID,quantity,lineTotal) VALUES('$orderID','$productID','$quantity','$linetotal')";
+    //     $result=mysqli_query($CON,$sql);
+    // }
     echo json_encode(
         array(
             "success" => true,

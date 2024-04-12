@@ -7,10 +7,11 @@ include './Helpers/Authentication.php';
 
 if(
     isset($_POST['token']) &&
-    isset($_POST['productName'])&&
+    isset($_POST['propertyName'])&&
     isset($_POST['category'])&&
-    isset($_POST['productDescription'])&&
+    isset($_POST['propertyDescription'])&&
     isset($_POST['price'])&&
+    isset($_POST['location'])&&
     isset($_FILES['image'])
     // isset($_POST['isInStock'])
 
@@ -18,14 +19,21 @@ if(
 ){
     global $CON; 
     $token = $_POST['token'];
-    $productName = $_POST['productName'];
+    $userID = getUserID($token);
+    $productName = $_POST['propertyName'];
     $category = $_POST['category'];
-    $productDescription = $_POST['productDescription'];
+    $productDescription = $_POST['propertyDescription'];
     $price = $_POST['price'];
+    $location = $_POST['location'];
+
+    $isVerified = 0;
     // $isInStock = $_POST['isInStock'];
+    
 
 
-    if (isAdmin($token)) {  
+    if (isAdmin($token)) { 
+        $isVerified = 1;
+     }
 
     //     $sql = "select * from category where title = '$category'";
     // $result = mysqli_query($CON, $sql);
@@ -77,20 +85,20 @@ if(
 
         }
 
-    $insertQuery = "INSERT INTO product( productName, category, productDescription, price, imageURL) VALUES ('$productName','$category','$productDescription','$price','$upload_path') ";
+    $insertQuery = "INSERT INTO property( propertyName, category, propertyDescription, price, imageURL, userID, isVerified, location) VALUES ('$productName','$category','$productDescription','$price','$upload_path','$userID','$isVerified','$location') ";
     $insertResult = mysqli_query($CON,$insertQuery);
             if($insertResult){
             echo json_encode(
                 array(
                     "success"=> true,
-                    "message" => "product added successfully!!"
+                    "message" => "property added successfully!!"
                 )
                 );
         }else {
             echo json_encode(
                 array(
                     "success"=> false,
-                    "message" => "product not added!!"
+                    "message" => "property not added!!"
                 )
                 );
         }
@@ -130,15 +138,7 @@ if(
     //     }
 
     // }
-    } else {
-        echo json_encode(
-            array(
-                "success" => false,
-                "message" => "Access denied"
-            )
-        );
-        
-    }
+    
     
 
     

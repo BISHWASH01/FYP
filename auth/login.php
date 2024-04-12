@@ -26,6 +26,13 @@ if (
         $hashed_password = $row['password'];
         $userId = $row['userId'];        
         $role = $row['role'];
+        $userName = $row['fullName'];
+if ($row['isMember']== '1') {
+    $isMember = "Member" ;
+}else{
+    $isMember = "notMember";
+}
+        
 
         $result = password_verify($password, $hashed_password);
 
@@ -43,7 +50,8 @@ if (
                         "success" => true,
                         "message" => "User logged in successfully!",
                         "token" => $token,
-                        "role" => $role
+                        "role" => $role,
+                        "isMember" => $isMember 
                     )
                 );
             } else {

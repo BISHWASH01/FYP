@@ -22,12 +22,13 @@ $token = $_POST['token'];
 $isAdmin = isAdmin($token);
 $userId = getUserId($token);
 
+
 $sql = '';
 
 if ($isAdmin) {
     $sql = "SELECT o.*,email,fullName FROM ordersmade o join user u on u.userID = o.userID order by orderID desc";
 } else {
-    $sql = "SELECT * FROM orders WHERE user_id='$userId' order by orderID desc";
+    $sql = "SELECT * FROM ordersmade WHERE userID='$userId' order by orderID desc";
 }
 
 $result = mysqli_query($CON, $sql);
@@ -41,8 +42,8 @@ if ($result) {
     echo json_encode(
         array(
             "success" => true,
-            "message" => "Orders fetched successfully!",
-            "data" => $orders
+            "message" => "orders fetched successfully!!",
+            "data"=>$orders
         )
     );
 } else {
