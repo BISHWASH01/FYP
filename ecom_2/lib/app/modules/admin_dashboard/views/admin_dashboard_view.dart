@@ -21,7 +21,7 @@ class AdminDashboardView extends GetView<AdminDashboardController> {
               init: AdminDashboardController(),
               builder: (controller) {
                 if (controller.stats == null) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
@@ -34,15 +34,16 @@ class AdminDashboardView extends GetView<AdminDashboardController> {
                     },
                     child: GridView(
                         shrinkWrap: true,
-                        padding: EdgeInsets.all(10),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 5.0,
-                            crossAxisSpacing: 5),
+                        padding: const EdgeInsets.all(10),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 5.0,
+                                crossAxisSpacing: 5),
                         children: [
                           StatsCard(
                             label: 'Total Membership Income',
-                            icon: Icon(Icons.money),
+                            icon: const Icon(Icons.money),
                             isAmount: true,
                             value:
                                 controller.stats?.membershipIncome.toString() ??
@@ -50,7 +51,7 @@ class AdminDashboardView extends GetView<AdminDashboardController> {
                           ),
                           StatsCard(
                             label: 'Total Users',
-                            icon: Icon(Icons.person),
+                            icon: const Icon(Icons.person),
                             value:
                                 controller.stats?.totalUsers.toString() ?? '',
                           ),
@@ -82,7 +83,7 @@ class AdminDashboardView extends GetView<AdminDashboardController> {
                 );
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             MyButton(
@@ -118,14 +119,14 @@ class StatsCard extends StatelessWidget {
         BoxShadow(
             spreadRadius: 2,
             color: Colors.black.withOpacity(0.2),
-            offset: Offset(1, 1))
-      ], color: color ?? Color.fromRGBO(242, 242, 242, 1)),
+            offset: const Offset(1, 1))
+      ], color: color ?? const Color.fromRGBO(242, 242, 242, 1)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
             (isAmount ? 'Rs.' : '') + value == "null" ? "0" : value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
               color: Color.fromARGB(255, 67, 147, 239),
@@ -136,11 +137,11 @@ class StatsCard extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),
-              icon ?? SizedBox.shrink()
+              icon ?? const SizedBox.shrink()
             ],
           )
         ],

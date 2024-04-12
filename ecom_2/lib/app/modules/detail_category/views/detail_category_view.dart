@@ -9,6 +9,7 @@ import '../controllers/detail_category_controller.dart';
 
 class DetailCategoryView extends GetView<DetailCategoryController> {
   const DetailCategoryView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var category = Get.arguments as Category;
