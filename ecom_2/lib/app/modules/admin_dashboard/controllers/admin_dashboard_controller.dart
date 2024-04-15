@@ -17,11 +17,6 @@ class AdminDashboardController extends GetxController {
     getStats();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   Future<void> getStats() async {
     try {
       var url = Uri.http(ipAddress, 'ecom_api/getStats');

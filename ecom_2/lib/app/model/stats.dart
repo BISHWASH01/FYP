@@ -62,33 +62,29 @@ class Stats {
 }
 
 class TopCategory {
-  final String? title;
   final dynamic totalProperties;
   final double? percentage;
   final int? categoryId;
   final String? category;
 
   TopCategory({
-    this.title,
+    this.category,
     this.totalProperties,
     this.percentage,
     this.categoryId,
-    this.category,
   });
 
   factory TopCategory.fromJson(Map<String, dynamic> json) => TopCategory(
-        title: json["title"],
+        category: json["title"],
         totalProperties: json["total_properties"],
         percentage: json["percentage"]?.toDouble(),
         categoryId: json["category_id"],
-        category: json["category"],
       );
 
   Map<String, dynamic> toJson() => {
-        "title": title,
+        "title": category,
         "total_properties": totalProperties,
         "percentage": percentage,
         "category_id": categoryId,
-        "category": category,
       };
 }

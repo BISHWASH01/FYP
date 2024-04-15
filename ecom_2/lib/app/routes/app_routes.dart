@@ -27,6 +27,7 @@ abstract class Routes {
   static const USER_PROPERTY_EDIT = _Paths.USER_PROPERTY_EDIT;
   static const MEMBERSHIP = _Paths.MEMBERSHIP;
   static const USER_PROFILE_EDIT = _Paths.USER_PROFILE_EDIT;
+  static const USER_SEARCH_PAGE = _Paths.USER_SEARCH_PAGE;
 }
 
 abstract class _Paths {
@@ -55,4 +56,5 @@ abstract class _Paths {
   static const USER_PROPERTY_EDIT = '/user-property-edit';
   static const MEMBERSHIP = '/membership';
   static const USER_PROFILE_EDIT = '/user-profile-edit';
+  static const USER_SEARCH_PAGE = '/user-search-page';
 }

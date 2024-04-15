@@ -17,6 +17,14 @@ class ProfileView extends GetView<ProfileController> {
         appBar: AppBar(
           title: const Text('My Profile'),
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.USER_PROFILE_EDIT);
+              },
+              icon: Icon(Icons.edit),
+            )
+          ],
         ),
         body: GetBuilder<ProfileController>(
           init: ProfileController(),

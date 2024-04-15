@@ -12,6 +12,8 @@ import '../modules/UserPropertyEdit/bindings/user_property_edit_binding.dart';
 import '../modules/UserPropertyEdit/views/user_property_edit_view.dart';
 import '../modules/UserPropertyListing/bindings/user_property_listing_binding.dart';
 import '../modules/UserPropertyListing/views/user_property_listing_view.dart';
+import '../modules/UserSearchPage/bindings/user_search_page_binding.dart';
+import '../modules/UserSearchPage/views/user_search_page_view.dart';
 import '../modules/User_Favourites/bindings/user_favourites_binding.dart';
 import '../modules/User_Favourites/views/user_favourites_view.dart';
 import '../modules/admin_categories/bindings/admin_categories_binding.dart';
@@ -177,6 +179,11 @@ class AppPages {
       name: _Paths.USER_PROFILE_EDIT,
       page: () => const UserProfileEditView(),
       binding: UserProfileEditBinding(),
+    ),
+    GetPage(
+      name: _Paths.USER_SEARCH_PAGE,
+      page: () => UserSearchPageView(),
+      binding: UserSearchPageBinding(),
     ),
   ];
 }

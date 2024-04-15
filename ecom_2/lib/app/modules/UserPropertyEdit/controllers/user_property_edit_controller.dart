@@ -46,7 +46,7 @@ class UserPropertyEditController extends GetxController {
         product.value =
             propertyFromJson(jsonEncode(jsonData['productDetail']))[0];
         // Update text controllers
-        titleController.text = product.value!.title.toString();
+        titleController.text = product.value!.propertyName.toString();
         descriptionController.text =
             product.value!.propertyDescription.toString();
         priceController.text = product.value!.price.toString();

@@ -50,6 +50,21 @@ class AdminProductCard extends StatelessWidget {
               ),
             ),
             const Spacer(),
+            MemoryManagement.getAccessRole() == 'admin' &&
+                    property.isVerified == "pending"
+                ? ElevatedButton(
+                    onPressed: () {
+                      VerifyPropertyDialog(propertyId: property.propertyId!);
+                    },
+                    child: Text("verify"))
+                : SizedBox(
+                    height: 0,
+                  ),
+            MemoryManagement.getAccessRole() == 'admin' &&
+                    property.isVerified == "verified"
+                ? Icon(Icons.verified)
+                : SizedBox(),
+            const Spacer(),
             MemoryManagement.getAccessRole() == 'admin'
                 ? IconButton(
                     onPressed: () {
@@ -110,6 +125,60 @@ class DeleteProductDialog extends StatelessWidget {
                       Get.back();
                     },
                     child: Text('No'))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class VerifyPropertyDialog extends StatelessWidget {
+  final String propertyId;
+  const VerifyPropertyDialog({super.key, required this.propertyId});
+
+  @override
+  Widget build(BuildContext context) {
+    var controller = Get.find<
+        AdminProductsController>(); // Assuming a PropertyController exists
+    // var controller = Get.put(PropertyController()); // Use if the controller is not previously created
+
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Are you sure you want to verify this property?',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    // controller.onVerifyClicked(
+                    //     propertyId:
+                    //         propertyId); // Method to verify the property
+                    Get.back(); // Close the dialog
+                  },
+                  child:
+                      const Text('Yes', style: TextStyle(color: Colors.green)),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Get.back(); // Close the dialog without doing anything
+                  },
+                  child: const Text('No', style: TextStyle(color: Colors.red)),
+                )
               ],
             )
           ],

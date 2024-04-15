@@ -24,13 +24,67 @@ class AdminProductsView extends GetView<AdminProductsController> {
                 child: CircularProgressIndicator(),
               );
             }
-            return ListView.builder(
-                itemCount: controller.properties?.length ?? 0,
-                itemBuilder: (context, index) {
-                  return AdminProductCard(
-                    property: controller.properties![index],
-                  );
-                });
+            var verifiedProperties = controller.properties
+                    ?.where((property) => property.isVerified == "verified")
+                    .toList() ??
+                [];
+
+            var pendingProperties = controller.properties
+                    ?.where((property) => property.isVerified == "pending")
+                    .toList() ??
+                [];
+            var normalProperties = controller.properties
+                    ?.where((property) => property.isVerified == "not")
+                    .toList() ??
+                [];
+            return DefaultTabController(
+                length: 3,
+                child: Column(
+                  children: [
+                    TabBar(tabs: [
+                      Tab(
+                        text: "verified",
+                      ),
+                      Tab(
+                        text: "Unverified",
+                      ),
+                      Tab(
+                        text: "Normal",
+                      )
+                    ]),
+                    Expanded(
+                        child: TabBarView(children: [
+                      ListView.builder(
+                          itemCount: verifiedProperties.length,
+                          itemBuilder: (context, index) {
+                            return AdminProductCard(
+                              property: verifiedProperties[index],
+                            );
+                          }),
+                      ListView.builder(
+                          itemCount: pendingProperties.length,
+                          itemBuilder: (context, index) {
+                            return AdminProductCard(
+                              property: pendingProperties[index],
+                            );
+                          }),
+                      ListView.builder(
+                          itemCount: normalProperties.length,
+                          itemBuilder: (context, index) {
+                            return AdminProductCard(
+                              property: normalProperties[index],
+                            );
+                          }),
+                    ]))
+                  ],
+                ));
+            // return ListView.builder(
+            //     itemCount: controller.properties?.length ?? 0,
+            //     itemBuilder: (context, index) {
+            //       return AdminProductCard(
+            //         property: controller.properties![index],
+            //       );
+            //     });
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: controller.onAdd,

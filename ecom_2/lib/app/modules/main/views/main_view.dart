@@ -119,8 +119,7 @@ class MainView extends GetView<MainController> {
                   icon: Icon(Icons.list), label: 'MyProduct'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.add), label: 'ListProperty'),
-              // BottomNavigationBarItem(
-              //     icon: Icon(Icons.podcasts_sharp), label: 'popup'),
+              BottomNavigationBarItem(icon: Icon(Icons.search), label: 'popup'),
             ],
           ),
         ));

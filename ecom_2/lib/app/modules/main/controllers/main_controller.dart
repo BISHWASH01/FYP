@@ -1,6 +1,7 @@
 import 'package:ecom_2/app/components/addProductPopup.dart';
 import 'package:ecom_2/app/modules/UserAddProperty/views/user_add_property_view.dart';
 import 'package:ecom_2/app/modules/UserPropertyListing/views/user_property_listing_view.dart';
+import 'package:ecom_2/app/modules/UserSearchPage/views/user_search_page_view.dart';
 import 'package:ecom_2/app/modules/User_Favourites/views/user_favourites_view.dart';
 import 'package:ecom_2/app/modules/cart/views/cart_view.dart';
 import 'package:ecom_2/app/modules/home/views/home_view.dart';
@@ -14,8 +15,8 @@ class MainController extends GetxController {
     const HomeView(),
     const UserFavouritesView(),
     UserPropertyListingView(),
-    const UserAddPropertyView()
-    // const AddProductPopup()
+    const UserAddPropertyView(),
+    UserSearchPageView()
   ];
 
   var currentIndex = 0.obs;

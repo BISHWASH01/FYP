@@ -14,7 +14,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class UserAddPropertyController extends GetxController {
-  var addProductFormKey = GlobalKey<FormState>();
+  var addFlatFormKey = GlobalKey<FormState>();
+  var addPHouseFormKey = GlobalKey<FormState>();
+  var addEmptyFormKey = GlobalKey<FormState>();
+
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   var priceController = TextEditingController();
@@ -117,10 +120,10 @@ class UserAddPropertyController extends GetxController {
     }
   }
 
-  void addProduct() async {
+  void addProduct(String propertyType) async {
     print(selectedLocation);
     try {
-      if (addProductFormKey.currentState!.validate()) {
+      if (addEmptyFormKey.currentState!.validate()) {
         try {
           var url = Uri.http(ipAddress, 'ecom_api/addProperty');
 
@@ -131,6 +134,8 @@ class UserAddPropertyController extends GetxController {
           request.fields['price'] = priceController.text;
           request.fields['category'] = selectedCategory!;
           request.fields['location'] = selectedLocation!;
+          request.fields['location'] = selectedLocation!;
+
           request.fields['token'] = MemoryManagement.getAccessToken()!;
           // request.fields['isVerified'] = "0";
 

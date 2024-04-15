@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ecom_2/app/components/addProductPopup.dart';
+// import 'package:ecom_2/app/components/addProductPopup.dart';
 import 'package:ecom_2/app/constants.dart';
 import 'package:ecom_2/app/model/category.dart';
 import 'package:ecom_2/app/model/property.dart';
@@ -9,10 +9,10 @@ import 'package:ecom_2/app/model/user.dart';
 import 'package:ecom_2/app/routes/app_pages.dart';
 import 'package:ecom_2/app/utils/memoryManagement.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/request/request.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:get/get_connect/http/src/request/request.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,6 +21,7 @@ class HomeController extends GetxController {
   late final SharedPreferences prefs;
   List<Category>? categories;
   List<Property>? properties;
+  List<Property>? featuredProperties;
   final count = 0.obs;
   var addCategoryFormKey = GlobalKey<FormState>();
   User? user;
