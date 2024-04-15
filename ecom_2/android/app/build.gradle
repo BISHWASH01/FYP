@@ -29,7 +29,7 @@ android {
     namespace "np.com.bishwashpoudel.ecom_2"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
-
+        
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -62,6 +62,13 @@ android {
         }
     }
 }
+android {
+    defaultConfig {
+        minSdkVersion 20
+    }
+}
+
+
 
 flutter {
     source '../..'
