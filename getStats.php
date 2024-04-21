@@ -82,7 +82,7 @@ if (
 
 
      // top 5 categories with total property
-$sql = "SELECT c.title, COUNT(p.propertyID) AS total_properties
+$sql = "SELECT c.catID, c.title, COUNT(p.propertyID) AS total_properties
 FROM category c
 LEFT JOIN property p ON c.catID = p.category
 GROUP BY c.catID, c.title
@@ -114,8 +114,8 @@ foreach ($topCategories as $key => $user) {
 }
 
 $topCategories[] = array(
-    "category_id" => 0,
-    "category" => "Others",
+    "catID" => 0,
+    "title" => "Others",
     "total_properties" => $remainingProperty,
     "percentage" => abs(round($remainingPercentage))
 );

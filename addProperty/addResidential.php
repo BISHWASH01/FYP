@@ -1,19 +1,27 @@
 <?php
 
-include './Helpers/DatabaseConfig.php';
-include './Helpers/Authentication.php';
+include '../Helpers/DatabaseConfig.php';
+include '../Helpers/Authentication.php';
 
 
 
 if(
     isset($_POST['token']) &&
     isset($_POST['propertyName'])&&
+    // isset($_POST['propertyType'])&&
     isset($_POST['category'])&&
+    isset($_POST['type'])&&
+    isset($_POST['location'])&&
     isset($_POST['propertyDescription'])&&
     isset($_POST['price'])&&
-    isset($_POST['location'])&&
-    isset($_FILES['image'])
-    // isset($_POST['isInStock'])
+    isset($_FILES['image'])&&
+
+    isset($_POST['bedrooms'])&&
+    isset($_POST['bathrooms'])&&
+    isset($_POST['size'])&&
+    isset($_POST['parking_spaces'])
+
+
 
 
 ){
@@ -21,13 +29,19 @@ if(
     $token = $_POST['token'];
     $userID = getUserID($token);
     $productName = $_POST['propertyName'];
+    // $propertyType = $_POST['propertyType'];
     $category = $_POST['category'];
+    $type = $_POST['type'];
+    $location = $_POST['location'];
     $productDescription = $_POST['propertyDescription'];
     $price = $_POST['price'];
-    $location = $_POST['location'];
+
+    $bedrooms = $_POST['bedrooms'];
+    $bathrooms = $_POST['bathrooms'];
+    $size = $_POST['size'];
+    $parking_spaces = $_POST['parking_spaces'];
 
     $isVerified = 0;
-    // $isInStock = $_POST['isInStock'];
     
 
 
@@ -35,13 +49,7 @@ if(
         $isVerified = 1;
      }
 
-    //     $sql = "select * from category where title = '$category'";
-    // $result = mysqli_query($CON, $sql);
-    // // $num = mysqli_num_rows($result);
 
-    // $row = mysqli_fetch_assoc($result);
-
-    // $categoryID = $row['catID'];
 
         $image_name = $_FILES['image']['name'];
         $image_tmp_name = $_FILES['image']['tmp_name'];
@@ -72,7 +80,9 @@ if(
         }
 
         $image_new_name = time().'_'.$image_name;
-        $upload_path = 'images/'.$image_new_name;
+        $upload_path = '../images/'.$image_new_name;
+        $pathNameInDb = 'images/'.$image_new_name;
+
 
         if (!move_uploaded_file($image_tmp_name,$upload_path)) {
             echo json_encode(
@@ -85,9 +95,13 @@ if(
 
         }
 
-    $insertQuery = "INSERT INTO property( propertyName, category, propertyDescription, price, imageURL, userID, isVerified, location) VALUES ('$productName','$category','$productDescription','$price','$upload_path','$userID','$isVerified','$location') ";
+    $insertQuery = "INSERT INTO property( propertyName,propertyType, category,type,location, propertyDescription, price, imageURL, userID ) VALUES ('$productName','residential','$category','$type','$location','$productDescription','$price','$pathNameInDb','$userID') ";
     $insertResult = mysqli_query($CON,$insertQuery);
             if($insertResult){
+                $propertyID = mysqli_insert_id($CON);
+                $sql= "Insert into residential_properties(propertyID, bedrooms, bathrooms,size,parking_spaces) VALUES ('$propertyID','$bedrooms','$bathrooms','$size','$parking_spaces')";
+                $result = mysqli_query($CON,$sql);
+                if($result){
             echo json_encode(
                 array(
                     "success"=> true,
@@ -98,53 +112,20 @@ if(
             echo json_encode(
                 array(
                     "success"=> false,
+                    "message" => "residential property not added!!"
+                )
+                );
+        }}else{
+
+            echo json_encode(
+                array(
+                    "success"=> false,
                     "message" => "property not added!!"
                 )
                 );
         }
 
 
-    
-
-    // if($num > 0){
-
-    //     echo json_encode(
-    //         array(
-    //             "success" => false,
-    //             "message" => "Category title already exists!!!"
-    //         )
-    //         );
-    //         return;
-    // }else{
-
-    //     $insertQuery = "INSERT INTO category (title) VALUES ('$title')";
-    //     $insertResult = mysqli_query($CON,$insertQuery);
-        
-
-    //     if($insertResult){
-    //         echo json_encode(
-    //             array(
-    //                 "success"=> true,
-    //                 "message" => "Category added successfully!!"
-    //             )
-    //             );
-    //     }else {
-    //         echo json_encode(
-    //             array(
-    //                 "success"=> false,
-    //                 "message" => "Category title not added!!"
-    //             )
-    //             );
-    //     }
-
-    // }
-    
-    
-
-    
-
-
-    
 
 
 }else{

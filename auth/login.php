@@ -51,7 +51,8 @@ if ($row['isMember']== '1') {
                         "message" => "User logged in successfully!",
                         "token" => $token,
                         "role" => $role,
-                        "isMember" => $isMember 
+                        "isMember" => $isMember ,
+                        "userID"=> $userId
                     )
                 );
             } else {

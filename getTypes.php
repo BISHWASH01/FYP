@@ -7,15 +7,15 @@ include './Helpers/Authentication.php';
 
     global $CON; 
 
-    $locationList = getLocationList();
+    $types = getTypeList();
 
-        if ($locationList != null) {
+        if ($types != null) {
 
             echo json_encode(
                 array(
                     "success" => true,
                     "message" => "list retrival succesfull",
-                    "locations"=>$locationList
+                    "types"=>$types
 
                 )
                 
@@ -27,9 +27,9 @@ include './Helpers/Authentication.php';
 
 
 
-function getLocationList(){
+function getTypeList(){
     global $CON;
-    $sql="select * from locations";
+    $sql="select * from types";
     $result = mysqli_query($CON, $sql);
     $num = mysqli_num_rows($result);
 
@@ -39,12 +39,12 @@ function getLocationList(){
         while ($row = mysqli_fetch_assoc($result)) {
             
             
-            $locationList[] = $row;
+            $types[] = $row;
 
 
         }
 
-        return $locationList;
+        return $types;
     }
 
 

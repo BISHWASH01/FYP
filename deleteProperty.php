@@ -31,7 +31,7 @@ if (
         $result = mysqli_query($CON, $sql);
     
         $property = mysqli_fetch_assoc($result);
-        $iselectedUserID = $product['userID'];
+        $iselectedUserID = $property['userID'];
 
         if ($userID != $iselectedUserID) {
 
