@@ -1,5 +1,4 @@
 import 'package:ecom_2/app/modules/UserPropertyListing/controllers/user_property_listing_controller.dart';
-import 'package:ecom_2/app/modules/main/controllers/main_controller.dart';
 import 'package:ecom_2/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 

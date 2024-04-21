@@ -28,6 +28,13 @@ abstract class Routes {
   static const MEMBERSHIP = _Paths.MEMBERSHIP;
   static const USER_PROFILE_EDIT = _Paths.USER_PROFILE_EDIT;
   static const USER_SEARCH_PAGE = _Paths.USER_SEARCH_PAGE;
+  static const DETAILED_RESIDENTIAL_PROPERTY =
+      _Paths.DETAILED_RESIDENTIAL_PROPERTY;
+  static const DETAILED_COMMERCIAL_PROPERTY =
+      _Paths.DETAILED_COMMERCIAL_PROPERTY;
+  static const DETAILED_INDUSTRIAL_PROPERTY =
+      _Paths.DETAILED_INDUSTRIAL_PROPERTY;
+  static const DETAILED_LAND_PROPERTY = _Paths.DETAILED_LAND_PROPERTY;
 }
 
 abstract class _Paths {
@@ -57,4 +64,8 @@ abstract class _Paths {
   static const MEMBERSHIP = '/membership';
   static const USER_PROFILE_EDIT = '/user-profile-edit';
   static const USER_SEARCH_PAGE = '/user-search-page';
+  static const DETAILED_RESIDENTIAL_PROPERTY = '/detailed-residential-property';
+  static const DETAILED_COMMERCIAL_PROPERTY = '/detailed-commercial-property';
+  static const DETAILED_INDUSTRIAL_PROPERTY = '/detailed-industrial-property';
+  static const DETAILED_LAND_PROPERTY = '/detailed-land-property';
 }

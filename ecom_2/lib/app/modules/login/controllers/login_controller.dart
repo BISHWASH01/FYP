@@ -36,6 +36,7 @@ class LoginController extends GetxController {
           MemoryManagement.setAccessRole(result['role']);
           MemoryManagement.setAccessToken(result['token']);
           MemoryManagement.setMembershipStatus(result['isMember']);
+          MemoryManagement.setUserID(result['userID']);
           // await prefs.setString('token', result['token']);
           // await prefs.setString('role', result['role']);
 

@@ -1,6 +1,5 @@
 import 'package:ecom_2/app/components/My_button.dart';
 import 'package:ecom_2/app/model/user.dart';
-import 'package:ecom_2/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

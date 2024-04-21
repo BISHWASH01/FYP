@@ -1,5 +1,4 @@
 import 'package:ecom_2/app/components/admin_product_card.dart';
-import 'package:ecom_2/app/components/product_card.dart';
 import 'package:ecom_2/app/model/category.dart';
 import 'package:flutter/material.dart';
 

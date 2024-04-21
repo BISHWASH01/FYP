@@ -172,7 +172,7 @@ class CartCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        cartItem.property.title ?? '',
+                        cartItem.property.categoryName ?? '',
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),

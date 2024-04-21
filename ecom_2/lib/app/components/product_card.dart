@@ -110,7 +110,7 @@ import 'package:get/get.dart';
 //   }
 // }
 class ProductCard extends StatelessWidget {
-  final Property property;
+  final dynamic property;
   const ProductCard({Key? key, required this.property}) : super(key: key);
 
   @override
@@ -118,7 +118,19 @@ class ProductCard extends StatelessWidget {
     var userFavController = Get.put(UserFavouritesController());
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.DETAILED_PRODUCT, arguments: property);
+        print(property.propertyType);
+        if (property.propertyType == "residential") {
+          print("object");
+          Get.toNamed(Routes.DETAILED_RESIDENTIAL_PROPERTY,
+              arguments: property);
+        } else if (property.propertyType == "commercial") {
+          Get.toNamed(Routes.DETAILED_COMMERCIAL_PROPERTY, arguments: property);
+        } else if (property.propertyType == "industrial") {
+          Get.toNamed(Routes.DETAILED_INDUSTRIAL_PROPERTY, arguments: property);
+        } else if (property.propertyType == "land") {
+          Get.toNamed(Routes.DETAILED_LAND_PROPERTY, arguments: property);
+        }
+        // Get.toNamed(Routes.DETAILED_PRODUCT, arguments: property);
       },
       child: Container(
         width: 250,
@@ -138,19 +150,20 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(15.0)),
-              child: Hero(
-                tag: 'product+${property.propertyId}',
-                child: Image.network(
-                  getImageUrl(property.imageUrl),
-                  fit: BoxFit.cover,
-                  height: 150,
-                  width: double.infinity,
+            if (property.imageUrl != null)
+              ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(15.0)),
+                child: Hero(
+                  tag: 'property_${property.propertyId}',
+                  child: Image.network(
+                    getImageUrl(property.imageUrl),
+                    fit: BoxFit.cover,
+                    height: 150,
+                    width: double.infinity,
+                  ),
                 ),
               ),
-            ),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Column(

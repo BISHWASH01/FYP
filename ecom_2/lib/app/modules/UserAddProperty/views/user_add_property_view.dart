@@ -1,343 +1,208 @@
-import 'package:ecom_2/app/components/My_button.dart';
 import 'package:ecom_2/app/modules/UserAddProperty/controllers/user_add_property_controller.dart';
-import 'package:ecom_2/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class UserAddPropertyView extends StatefulWidget {
+class UserAddPropertyView extends GetView<UserAddPropertyController> {
   const UserAddPropertyView({Key? key}) : super(key: key);
-
-  @override
-  _UserAddPropertyViewState createState() => _UserAddPropertyViewState();
-}
-
-class _UserAddPropertyViewState extends State<UserAddPropertyView>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserAddPropertyController>(
-      init: UserAddPropertyController(),
-      builder: (controller) => Scaffold(
+    final UserAddPropertyController controller =
+        Get.put(UserAddPropertyController());
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Add Property'),
-          bottom: TabBar(
-            controller: _tabController,
-            tabs: const [
-              Tab(text: 'Flat'),
-              Tab(text: 'Whole House'),
-              Tab(text: 'Empty Property'),
-            ],
-          ),
+          centerTitle: true,
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            _buildPropertyForm(controller, 'Flat', controller.addFlatFormKey),
-            _buildPropertyForm(
-                controller, 'Whole House', controller.addPHouseFormKey),
-            _buildPropertyForm(
-                controller, 'Empty Property', controller.addEmptyFormKey),
-          ],
+        body: GetBuilder<UserAddPropertyController>(
+            builder: (controller) => SingleChildScrollView(
+                  padding: EdgeInsets.all(16.0),
+                  child: Form(
+                    key: controller.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          controller: controller.titleController,
+                          decoration:
+                              InputDecoration(labelText: 'Property Name'),
+                          validator: (value) => value!.isEmpty
+                              ? 'Please enter the property name'
+                              : null,
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          controller: controller.descriptionController,
+                          decoration: InputDecoration(labelText: 'Description'),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          controller: controller.priceController,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(labelText: 'Price'),
+                          validator: (value) =>
+                              value!.isEmpty ? 'Please enter the price' : null,
+                        ),
+
+                        DropdownButtonFormField<String>(
+                          value: controller.selectedCategory,
+                          onChanged: (newValue) =>
+                              controller.selectedCategory = newValue,
+                          items: controller.categoryItems,
+                          decoration: InputDecoration(labelText: 'Category'),
+                        ),
+
+                        DropdownButtonFormField<String>(
+                          value: controller.selectedType,
+                          onChanged: (newValue) =>
+                              controller.selectedType = newValue,
+                          items: controller.typeItems,
+                          decoration: InputDecoration(labelText: 'Type'),
+                        ),
+
+                        DropdownButtonFormField<String>(
+                          value: controller.selectedLocation,
+                          onChanged: (newValue) =>
+                              controller.selectedLocation = newValue,
+                          items: controller.locationItems,
+                          decoration: InputDecoration(labelText: 'Location'),
+                        ),
+                        // Image Picker
+                        controller.propertyImage == null ||
+                                controller.imageBytes == null
+                            ? ElevatedButton(
+                                onPressed: controller.onPickImage,
+                                child: const Text('Upload Image'))
+                            : Image.memory(controller.imageBytes!),
+                        SizedBox(height: 20),
+
+                        // Toggle Buttons
+                        Wrap(
+                          children: PropertyType.values
+                              .map((type) => ElevatedButton(
+                                    onPressed: () =>
+                                        controller.togglePropertyForm(type),
+                                    child:
+                                        Text(type.toString().split('.').last),
+                                  ))
+                              .toList(),
+                        ),
+                        SizedBox(height: 20),
+
+                        // Conditional Property Forms
+                        if (controller.showResidentialForm)
+                          _buildResidentialForm(controller),
+                        if (controller.showCommercialForm)
+                          _buildCommercialForm(controller),
+                        if (controller.showIndustrialForm)
+                          _buildIndustrialForm(controller),
+                        if (controller.showLandForm) _buildLandForm(controller),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            controller
+                                .submitForm(controller.selectedPropertyType);
+                          },
+                          child: Text('Submit'),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        )
+                      ],
+                    ),
+                  ),
+                )));
+  }
+
+  Widget _buildResidentialForm(UserAddPropertyController controller) {
+    return Column(
+      children: [
+        const Text("Residential Property"),
+        TextFormField(
+          controller: controller.bedroomsController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Bedrooms'),
+          validator: (value) =>
+              value!.isEmpty ? 'Please enter number of bedrooms' : null,
         ),
-      ),
+        TextFormField(
+          controller: controller.bathroomsController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Bathrooms'),
+        ),
+        TextFormField(
+          controller: controller.sizeController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Size'),
+        ),
+        TextFormField(
+          controller: controller.parkingSpacesResidentialController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Parking Spaces'),
+        ),
+      ],
     );
   }
 
-  Widget _buildPropertyForm(UserAddPropertyController controller,
-      String propertyType, GlobalKey<FormState> key) {
-    // You can customize each form or use the same form structure with modifications based on propertyType
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Form(
-        key: key,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Add $propertyType',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: controller.titleController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                labelText: 'Property Title',
-                hintText: 'Enter Property title',
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter property title';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: controller.descriptionController,
-              textInputAction: TextInputAction.next,
-              minLines: 3,
-              maxLines: 5,
-              maxLength: 500,
-              decoration: const InputDecoration(
-                labelText: 'Property Description',
-                hintText: 'Enter Property description',
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter Property title';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: controller.priceController,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Property Price',
-                hintText: 'Enter Property price',
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter Property price';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: controller.priceController,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Property Area',
-                hintText: 'Enter Property Area',
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter Property Area';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            // GetBuilder<UserAddPropertyController>(
-            //     builder: (controller) =>
-            //     controller.categories == null
-            //         ? const CircularProgressIndicator()
-            //         : DropdownButtonFormField(
-            //             menuMaxHeight: 350,
-            //             decoration:
-            //                 const InputDecoration(border: OutlineInputBorder()),
-            //             hint: const Text('Select Category'),
-            //             items: controller.categories!
-            //                 .map((category) => DropdownMenuItem(
-            //                       value: category.categoryId,
-            //                       child: Text(category.categoryTitle ?? ''),
-            //                     ))
-            //                 .toList(),
-            //             onChanged: (v) {
-            //               controller.selectedCategory = v;
-            //             })
-            //             ),
-            const SizedBox(height: 16),
-            GetBuilder<UserAddPropertyController>(
-                builder: (controller) => controller.locations == null
-                    ? const CircularProgressIndicator()
-                    : DropdownButtonFormField(
-                        menuMaxHeight: 350,
-                        decoration:
-                            const InputDecoration(border: OutlineInputBorder()),
-                        hint: const Text('Select Location'),
-                        value: "40",
-                        items: controller.locations!
-                            .map((location) => DropdownMenuItem(
-                                  value: location.locationId,
-                                  child: Text(location.locationName ?? ''),
-                                ))
-                            .toList(),
-                        onChanged: (v) {
-                          controller.selectedLocation = v;
-                        })),
-            const SizedBox(height: 16),
-            controller.productImage == null || controller.imageBytes == null
-                ? ElevatedButton(
-                    onPressed: controller.onPickImage,
-                    child: const Text('Upload Image'))
-                : Image.memory(controller.imageBytes!),
-            const SizedBox(height: 16),
-            MyButton(
-                tittle: 'Add Property',
-                onPressed: () async {
-                  controller.addProduct(propertyType);
-                }),
-            const SizedBox(
-              height: 50,
-            )
-          ],
+  Widget _buildCommercialForm(UserAddPropertyController controller) {
+    return Column(
+      children: [
+        const Text("Commercial Property"),
+        TextFormField(
+          controller: controller.floorAreaController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Floor Area'),
         ),
-      ),
+        TextFormField(
+          controller: controller.parkingSpacesCommercialController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Parking Spaces'),
+        ),
+        TextFormField(
+          controller: controller.buildingClassController,
+          decoration: InputDecoration(labelText: 'Building Class'),
+        ),
+        TextFormField(
+          controller: controller.tenantCapacityController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Tenant Capacity'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIndustrialForm(UserAddPropertyController controller) {
+    return Column(
+      children: [
+        const Text("Industrial Property"),
+        TextFormField(
+          controller: controller.industrialSizeController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Size'),
+        ),
+        TextFormField(
+          controller: controller.clearHeightController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Clear Height'),
+        ),
+        TextFormField(
+          controller: controller.powerSupplyController,
+          decoration: InputDecoration(labelText: 'Power Supply'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLandForm(UserAddPropertyController controller) {
+    return Column(
+      children: [
+        TextFormField(
+          controller: controller.landSizeController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: 'Size'),
+          validator: (value) =>
+              value!.isEmpty ? 'Please enter land size' : null,
+        ),
+      ],
     );
   }
 }
-
-// class UserAddPropertyView extends
-//StatelessWidget {
-//   const UserAddPropertyView({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetBuilder<UserAddPropertyController>(
-//       init: UserAddPropertyController(),
-//       builder: (controller) => Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Add Property'),
-//         ),
-//         body: Padding(
-//           padding: const EdgeInsets.all(16),
-//           child: SingleChildScrollView(
-//             child: Form(
-//               key: controller.addProductFormKey,
-//               child: Column(
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   const Text(
-//                     'Add Property',
-//                     style: TextStyle(
-//                       fontSize: 20,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   const SizedBox(height: 16),
-//                   TextFormField(
-//                     controller: controller.titleController,
-//                     textInputAction: TextInputAction.next,
-//                     decoration: const InputDecoration(
-//                       labelText: 'Property Title',
-//                       hintText: 'Enter Property title',
-//                       border: OutlineInputBorder(),
-//                     ),
-//                     validator: (value) {
-//                       if (value == null || value.isEmpty) {
-//                         return 'Please enter property title';
-//                       }
-//                       return null;
-//                     },
-//                   ),
-//                   const SizedBox(height: 16),
-//                   TextFormField(
-//                     controller: controller.descriptionController,
-//                     textInputAction: TextInputAction.next,
-//                     minLines: 3,
-//                     maxLines: 5,
-//                     maxLength: 500,
-//                     decoration: const InputDecoration(
-//                       labelText: 'Property Description',
-//                       hintText: 'Enter Property description',
-//                       border: OutlineInputBorder(),
-//                     ),
-//                     validator: (value) {
-//                       if (value == null || value.isEmpty) {
-//                         return 'Please enter Property title';
-//                       }
-//                       return null;
-//                     },
-//                   ),
-//                   const SizedBox(height: 16),
-//                   TextFormField(
-//                     controller: controller.priceController,
-//                     textInputAction: TextInputAction.done,
-//                     keyboardType: TextInputType.number,
-//                     decoration: const InputDecoration(
-//                       labelText: 'Property Price',
-//                       hintText: 'Enter Property price',
-//                       border: OutlineInputBorder(),
-//                     ),
-//                     validator: (value) {
-//                       if (value == null || value.isEmpty) {
-//                         return 'Please enter Property price';
-//                       }
-//                       return null;
-//                     },
-//                   ),
-//                   const SizedBox(height: 16),
-//                   GetBuilder<UserAddPropertyController>(
-//                       builder: (controller) => controller.categories == null
-//                           ? const CircularProgressIndicator()
-//                           : DropdownButtonFormField(
-//                               menuMaxHeight: 350,
-//                               decoration: const InputDecoration(
-//                                   border: OutlineInputBorder()),
-//                               hint: const Text('Select Category'),
-//                               items: controller.categories!
-//                                   .map((category) => DropdownMenuItem(
-//                                         value: category.categoryId,
-//                                         child:
-//                                             Text(category.categoryTitle ?? ''),
-//                                       ))
-//                                   .toList(),
-//                               onChanged: (v) {
-//                                 controller.selectedCategory = v;
-//                               })),
-//                   const SizedBox(height: 16),
-//                   GetBuilder<UserAddPropertyController>(
-//                       builder: (controller) => controller.locations == null
-//                           ? const CircularProgressIndicator()
-//                           : DropdownButtonFormField(
-//                               menuMaxHeight: 350,
-//                               decoration: const InputDecoration(
-//                                   border: OutlineInputBorder()),
-//                               hint: const Text('Select Location'),
-//                               value: "40",
-//                               items: controller.locations!
-//                                   .map((location) => DropdownMenuItem(
-//                                         value: location.locationId,
-//                                         child:
-//                                             Text(location.locationName ?? ''),
-//                                       ))
-//                                   .toList(),
-//                               onChanged: (v) {
-//                                 controller.selectedLocation = v;
-//                               })),
-//                   const SizedBox(height: 16),
-//                   controller.productImage == null ||
-//                           controller.imageBytes == null
-//                       ? ElevatedButton(
-//                           onPressed: controller.onPickImage,
-//                           child: const Text('Upload Image'))
-//                       : Image.memory(controller.imageBytes!),
-//                   const SizedBox(height: 16),
-//                   MyButton(
-//                       tittle: 'Add Property', onPressed: controller.addProduct),
-//                   const SizedBox(
-//                     height: 50,
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:ecom_2/app/components/addProductPopup.dart';
 import 'package:ecom_2/app/constants.dart';
 import 'package:ecom_2/app/model/property.dart';
 import 'package:ecom_2/app/modules/home/controllers/home_controller.dart';
 import 'package:ecom_2/app/utils/memoryManagement.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class AdminProductsController extends GetxController {
@@ -23,7 +19,7 @@ class AdminProductsController extends GetxController {
     try {
       var url = Uri.http(ipAddress, 'ecom_api/deleteProperty');
       // await Future.delayed(const Duration(seconds: 3));
-      print(productId);
+      // print(productId);
 
       var response = await http.post(url, body: {
         'propertyID': productId,
@@ -50,7 +46,7 @@ class AdminProductsController extends GetxController {
         ));
       }
     } catch (e) {
-      print(e);
+      // print(e);
       Get.showSnackbar(const GetSnackBar(
         backgroundColor: Colors.red,
         message: 'Something went wrong',
@@ -91,7 +87,7 @@ class AdminProductsController extends GetxController {
         ));
       }
     } catch (e) {
-      print(e);
+      // print(e);
       Get.showSnackbar(const GetSnackBar(
         backgroundColor: Colors.red,
         message: 'Something went wrong',

@@ -3,7 +3,11 @@ import 'dart:convert';
 // import 'package:ecom_2/app/components/addProductPopup.dart';
 import 'package:ecom_2/app/constants.dart';
 import 'package:ecom_2/app/model/category.dart';
+import 'package:ecom_2/app/model/commercial.dart';
+import 'package:ecom_2/app/model/industrial.dart';
+import 'package:ecom_2/app/model/land.dart';
 import 'package:ecom_2/app/model/property.dart';
+import 'package:ecom_2/app/model/residential.dart';
 import 'package:ecom_2/app/model/user.dart';
 
 import 'package:ecom_2/app/routes/app_pages.dart';
@@ -17,11 +21,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
-  Map<String, List<Property>> propertyByCategory = {};
+  Map<String, List<dynamic>> propertyByCategory = {};
   late final SharedPreferences prefs;
   List<Category>? categories;
   List<Property>? properties;
   List<Property>? featuredProperties;
+  List<Land>? landProperty;
+  List<Residential>? residentialProperty;
+  List<Commercial>? commercialProperty;
+  List<Industrial>? industrialProperty;
+
   final count = 0.obs;
   var addCategoryFormKey = GlobalKey<FormState>();
   User? user;
@@ -169,42 +178,57 @@ class HomeController extends GetxController {
   void fetchCategoriesAndProducts() async {
     // Fetch categories
     categories = await fetchCategoryFromServer();
+    fetchProductsFromServer();
 
     // Fetch products
-    List<Property> properties = await fetchProductsFromServer();
+    // List<Property> properties = await fetchProductsFromServer();
+    // landProperty
+    //     ?.assignAll(properties.where((p) => p.propertyType == 'land').toList());
+    // residentialProperty?.assignAll(
+    //     properties.where((p) => p.propertyType == 'residential').toList());
+    // commercialProperty?.assignAll(
+    //     properties.where((p) => p.propertyType == 'commercial').toList());
+    // industrialProperty?.assignAll(
+    //     properties.where((p) => p.propertyType == 'industrial').toList());
 
     // Organize products by category
-    for (var property in properties) {
-      propertyByCategory.putIfAbsent(property.catId!, () => []);
-      propertyByCategory[property.catId!]!.add(property);
-    }
 
     update();
   }
 
-  Future<List<Property>> fetchProductsFromServer() async {
+  fetchProductsFromServer() async {
     try {
       var url = Uri.http(ipAddress, 'ecom_api/getProperty');
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
-        print(result['products']);
-        List<Property> properties =
-            propertyFromJson(jsonEncode(result['products']));
+        // print(result['products']);
+        List<Residential> residentialProperty =
+            residentialFromJson(jsonEncode(result['residential']));
+        List<Commercial> commercialProperty =
+            commercialFromJson(jsonEncode(result['commercial']));
+        List<Industrial> industrialProperty =
+            industrialFromJson(jsonEncode(result['commercial']));
+        List<Land> landProperty =
+            landFromJson(jsonEncode(result['commercial']));
+
+        for (var property in residentialProperty) {
+          propertyByCategory.putIfAbsent(property.categoryId!, () => []);
+          propertyByCategory[property.categoryId!]!.add(property);
+        }
 
         update();
-
-        return properties;
       } else {
         // Handle HTTP error
-        // print('HTTP error: ${response.statusCode}');
+        print('HTTP error: ${response.statusCode}');
         Get.snackbar("Error", 'HTTP error: ${response.statusCode}');
         return [];
       }
     } catch (e) {
       // Handle other errors, such as network errors or JSON parsing errors
       Get.snackbar("Error", e.toString());
+      print(e);
       return [];
     }
   }
@@ -227,9 +251,12 @@ class HomeController extends GetxController {
         }
       } else {
         // Handle HTTP error
+
         Get.snackbar("Error", 'HTTP error: ${response.statusCode}');
       }
     } catch (e) {
+      print(e);
+
       Get.snackbar("Error", e.toString());
     }
 
@@ -260,6 +287,8 @@ class HomeController extends GetxController {
         ));
       }
     } catch (e) {
+      print(e);
+
       Get.snackbar("Error", e.toString());
     }
   }

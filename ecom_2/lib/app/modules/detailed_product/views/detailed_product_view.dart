@@ -57,7 +57,7 @@ class DetailedProductView extends GetView<DetailedProductController> {
                             ),
                           ),
                           Text(
-                            'location : ${property.locationName}',
+                            'location : ${property.name} ${property.city}',
                             style: const TextStyle(
                               fontSize: 15,
                             ),

@@ -71,7 +71,7 @@ class UserDetailPropertyView extends GetView<UserDetailPropertyController> {
     return GetBuilder<UserDetailPropertyController>(
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          title: Text(property?.title?.toUpperCase() ?? ''),
+          title: Text(property?.propertyName?.toUpperCase() ?? ''),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -101,7 +101,7 @@ class UserDetailPropertyView extends GetView<UserDetailPropertyController> {
                       style: const TextStyle(fontSize: 20),
                     ),
                     Text(
-                      'Location : ${property?.locationName}',
+                      'Location : ${property?.name} ${property?.city}',
                       style: const TextStyle(fontSize: 20),
                     ),
                     Text(

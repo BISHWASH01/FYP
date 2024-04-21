@@ -13,141 +13,83 @@ String propertyToJson(List<Property> data) =>
 class Property {
   final String? propertyId;
   final String? propertyName;
+  final String? propertyType;
+  final String? typeName;
   final String? propertyDescription;
   final String? price;
   final String? isInStock;
   final String? imageUrl;
-  final String? userId;
   final String? isVerified;
-  final String? catId;
-  final String? title;
+  final String? categoryId;
+  final String? categoryName;
   final String? phoneNumber;
   final String? fullName;
   final String? email;
-  final String? locationId;
-  final String? locationName;
+  final String? id;
+  final String? name;
+  final String? city;
+  final String? country;
 
   Property({
     this.propertyId,
     this.propertyName,
+    this.propertyType,
+    this.typeName,
     this.propertyDescription,
     this.price,
     this.isInStock,
     this.imageUrl,
-    this.userId,
     this.isVerified,
-    this.catId,
-    this.title,
+    this.categoryId,
+    this.categoryName,
     this.phoneNumber,
     this.fullName,
     this.email,
-    this.locationId,
-    this.locationName,
+    this.id,
+    this.name,
+    this.city,
+    this.country,
   });
 
   factory Property.fromJson(Map<String, dynamic> json) => Property(
         propertyId: json["propertyID"],
         propertyName: json["propertyName"],
+        propertyType: json["propertyType"],
+        typeName: json["typeName"],
         propertyDescription: json["propertyDescription"],
         price: json["price"],
         isInStock: json["isInStock"],
         imageUrl: json["imageURL"],
-        userId: json["userID"],
         isVerified: json["isVerified"],
-        catId: json["catID"],
-        title: json["title"],
+        categoryId: json["categoryID"],
+        categoryName: json["categoryName"],
         phoneNumber: json["phoneNumber"],
         fullName: json["fullName"],
         email: json["email"],
-        locationId: json["locationID"],
-        locationName: json["locationName"],
+        id: json["id"],
+        name: json["name"],
+        city: json["city"],
+        country: json["country"],
       );
 
   Map<String, dynamic> toJson() => {
         "propertyID": propertyId,
         "propertyName": propertyName,
+        "propertyType": propertyType,
+        "typeName": typeName,
         "propertyDescription": propertyDescription,
         "price": price,
         "isInStock": isInStock,
         "imageURL": imageUrl,
-        "userID": userId,
         "isVerified": isVerified,
-        "catID": catId,
-        "title": title,
+        "categoryID": categoryId,
+        "categoryName": categoryName,
         "phoneNumber": phoneNumber,
         "fullName": fullName,
         "email": email,
-        "locationID": locationId,
-        "locationName": locationName,
+        "id": id,
+        "name": name,
+        "city": city,
+        "country": country,
       };
 }
-
-
-
-// // To parse this JSON data, do
-// //
-// //     final product = productFromJson(jsonString);
-
-// import 'dart:convert';
-
-// List<Property> propertyFromJson(String str) =>
-//     List<Property>.from(json.decode(str).map((x) => Property.fromJson(x)));
-
-// String propertyToJson(List<Property> data) =>
-//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-// class Property {
-//   final String? propertyID;
-//   final String? title;
-//   final String? propertyDescription;
-//   final String? categoryId;
-//   final String? imageUrl;
-//   final String? isAvailable;
-//   final String? price;
-//   final String? categoryTitle;
-//   String? isVerified;
-//   final String? userId;
-//   final String? phoneNumber;
-
-//   Property({
-//     this.propertyID,
-//     this.title,
-//     this.propertyDescription,
-//     this.categoryId,
-//     this.imageUrl,
-//     this.isAvailable,
-//     this.price,
-//     this.categoryTitle,
-//     this.isVerified,
-//     this.userId,
-//     this.phoneNumber,
-//   });
-
-//   factory Property.fromJson(Map<String, dynamic> json) => Property(
-//         propertyID: json["propertyID"],
-//         title: json["propertyName"],
-//         propertyDescription: json["propertyDescription"],
-//         categoryId: json["catID"],
-//         imageUrl: json["imageURL"],
-//         isAvailable: json["isInStock"],
-//         price: json["price"],
-//         categoryTitle: json["title"],
-//         isVerified: json["isVerified"],
-//         userId: json["userID"],
-//         phoneNumber: json["phoneNumber"],
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         "propertyID": propertyID,
-//         "propertyName": title,
-//         "propertyDescription": propertyDescription,
-//         "catID": categoryId,
-//         "imageURL": imageUrl,
-//         "isInStock": isAvailable,
-//         "price": price,
-//         "title": categoryTitle,
-//         "isVerified": isVerified,
-//         "userID": userId,
-//         "phoneNumber": phoneNumber,
-//       };
-// }

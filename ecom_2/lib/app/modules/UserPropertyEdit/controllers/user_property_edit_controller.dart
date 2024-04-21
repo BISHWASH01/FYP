@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:ecom_2/app/constants.dart';
 import 'package:ecom_2/app/model/property.dart';
-import 'package:ecom_2/app/modules/main/controllers/main_controller.dart';
 import 'package:ecom_2/app/utils/memoryManagement.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

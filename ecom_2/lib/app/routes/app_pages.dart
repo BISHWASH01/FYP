@@ -32,8 +32,16 @@ import '../modules/cart/bindings/cart_binding.dart';
 import '../modules/cart/views/cart_view.dart';
 import '../modules/detail_category/bindings/detail_category_binding.dart';
 import '../modules/detail_category/views/detail_category_view.dart';
+import '../modules/detailed_commercial_property/bindings/detailed_commercial_property_binding.dart';
+import '../modules/detailed_commercial_property/views/detailed_commercial_property_view.dart';
+import '../modules/detailed_industrial_property/bindings/detailed_industrial_property_binding.dart';
+import '../modules/detailed_industrial_property/views/detailed_industrial_property_view.dart';
+import '../modules/detailed_land_property/bindings/detailed_land_property_binding.dart';
+import '../modules/detailed_land_property/views/detailed_land_property_view.dart';
 import '../modules/detailed_product/bindings/detailed_product_binding.dart';
 import '../modules/detailed_product/views/detailed_product_view.dart';
+import '../modules/detailed_residential_property/bindings/detailed_residential_property_binding.dart';
+import '../modules/detailed_residential_property/views/detailed_residential_property_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -42,8 +50,6 @@ import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
-import '../modules/order/bindings/order_binding.dart';
-import '../modules/order/views/order_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
@@ -84,11 +90,6 @@ class AppPages {
       name: _Paths.CART,
       page: () => const CartView(),
       binding: CartBinding(),
-    ),
-    GetPage(
-      name: _Paths.ORDER,
-      page: () => const OrderView(),
-      binding: OrderBinding(),
     ),
     GetPage(
       name: _Paths.MAIN,
@@ -184,6 +185,26 @@ class AppPages {
       name: _Paths.USER_SEARCH_PAGE,
       page: () => UserSearchPageView(),
       binding: UserSearchPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAILED_RESIDENTIAL_PROPERTY,
+      page: () => const DetailedResidentialPropertyView(),
+      binding: DetailedResidentialPropertyBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAILED_COMMERCIAL_PROPERTY,
+      page: () => const DetailedCommercialPropertyView(),
+      binding: DetailedCommercialPropertyBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAILED_INDUSTRIAL_PROPERTY,
+      page: () => const DetailedIndustrialPropertyView(),
+      binding: DetailedIndustrialPropertyBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAILED_LAND_PROPERTY,
+      page: () => const DetailedLandPropertyView(),
+      binding: DetailedLandPropertyBinding(),
     ),
   ];
 }

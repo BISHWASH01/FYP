@@ -19,6 +19,18 @@ class MemoryManagement {
     prefs!.remove('token');
   }
 
+  static String? getuserID() {
+    return prefs != null ? prefs!.getString('userID') : null;
+  }
+
+  static void setUserID(String token) {
+    prefs!.setString('userID', token);
+  }
+
+  static void removeUserID() {
+    prefs!.remove('userID');
+  }
+
   static String? getAccessRole() {
     return prefs != null ? prefs!.getString('role') : null;
   }

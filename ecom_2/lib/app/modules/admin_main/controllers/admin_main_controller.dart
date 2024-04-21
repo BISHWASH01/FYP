@@ -1,9 +1,7 @@
 import 'package:ecom_2/app/modules/admin_categories/views/admin_categories_view.dart';
 import 'package:ecom_2/app/modules/admin_dashboard/views/admin_dashboard_view.dart';
-import 'package:ecom_2/app/modules/admin_orders/views/admin_orders_view.dart';
 import 'package:ecom_2/app/modules/admin_products/views/admin_products_view.dart';
 import 'package:ecom_2/app/modules/admin_users/views/admin_users_view.dart';
-import 'package:ecom_2/app/modules/order/views/order_view.dart';
 import 'package:ecom_2/app/modules/profile/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

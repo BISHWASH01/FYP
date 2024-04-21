@@ -14,7 +14,7 @@ class DetailCategoryController extends GetxController {
     var homeController = Get.find<HomeController>();
     var category = Get.arguments as Category;
     properties = homeController.properties
-            ?.where((element) => element.catId! == category.categoryId!)
+            ?.where((element) => element.categoryId! == category.categoryId!)
             .toList() ??
         [];
     print(homeController.properties);

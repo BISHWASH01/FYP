@@ -1,5 +1,4 @@
 import 'package:ecom_2/app/modules/User_Favourites/controllers/user_favourites_controller.dart';
-import 'package:ecom_2/app/modules/cart/controllers/cart_controller.dart';
 import 'package:ecom_2/app/utils/memoryManagement.dart';
 import 'package:flutter/material.dart';
 

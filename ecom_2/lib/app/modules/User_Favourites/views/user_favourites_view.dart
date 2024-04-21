@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:ecom_2/app/constants.dart';
 import 'package:ecom_2/app/model/property.dart';
-import 'package:ecom_2/app/modules/cart/views/cart_view.dart';
 import 'package:ecom_2/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 
@@ -88,7 +84,7 @@ class UserFavCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          favItem.product.title ?? '',
+                          favItem.product.propertyName ?? '',
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),

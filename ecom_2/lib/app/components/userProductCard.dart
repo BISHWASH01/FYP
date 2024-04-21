@@ -66,7 +66,7 @@ class userProductCard extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                property.title?.toUpperCase() ?? '',
+                                property.propertyName?.toUpperCase() ?? '',
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,

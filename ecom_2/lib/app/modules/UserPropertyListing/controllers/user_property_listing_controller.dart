@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:ecom_2/app/constants.dart';
+import 'package:ecom_2/app/model/commercial.dart';
+import 'package:ecom_2/app/model/industrial.dart';
+import 'package:ecom_2/app/model/land.dart';
 import 'package:ecom_2/app/model/property.dart';
+import 'package:ecom_2/app/model/residential.dart';
 import 'package:ecom_2/app/utils/memoryManagement.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +13,10 @@ import 'package:http/http.dart' as http;
 
 class UserPropertyListingController extends GetxController {
   var userProducts = <Property>[].obs; // List to store user's products
+  List<Residential> userResidentialProperty = [];
+  List<Commercial> userCommercialProperty = [];
+  List<Industrial> userIndustrialProperty = [];
+  List<Land> userLandProperty = [];
 
   final count = 0.obs;
   @override
@@ -20,7 +28,6 @@ class UserPropertyListingController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    fetchUserProducts();
   }
 
   @override
@@ -40,10 +47,22 @@ class UserPropertyListingController extends GetxController {
       var result = jsonDecode(response.body);
 
       if (result['success']) {
-        List<dynamic> fetchedProducts = result['products'];
-        var products =
-            fetchedProducts.map((e) => Property.fromJson(e)).toList();
-        userProducts.assignAll(products);
+        // List<dynamic> fetchedProducts = result['products'];
+        // var products =
+        //     fetchedProducts.map((e) => Property.fromJson(e)).toList();
+        // userProducts.assignAll(products);
+        userResidentialProperty =
+            residentialFromJson(jsonEncode(result['residential']));
+        userCommercialProperty =
+            commercialFromJson(jsonEncode(result['commercial']));
+        userIndustrialProperty =
+            industrialFromJson(jsonEncode(result['industrial']));
+        userLandProperty = landFromJson(jsonEncode(result['land']));
+        print(userResidentialProperty);
+        print(userCommercialProperty);
+        print(userIndustrialProperty);
+        print(userLandProperty);
+
         update();
       } else {
         Get.showSnackbar(GetSnackBar(
