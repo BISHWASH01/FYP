@@ -40,28 +40,20 @@ $userID = getUserID($token);
 
 
 
-if (isset($_POST['productID']) && isset($_POST['token'])) {
+if (isset($_POST['propertyId']) && isset($_POST['token'])) {
     
-    $productID = $_POST['productID'];
-    checkPaymentStatus($productID);
+    $propertyId = $_POST['propertyId'];
+    checkPaymentStatus($propertyId);
 
-    $sql = "INSERT INTO propertypaymet (userID, productID,amount,otherData) VALUES ('$userID','$productID','$total','$otherData')";
+    $sql = "INSERT INTO propertypayment (userID, propertyId,amount,otherData) VALUES ('$userID','$propertyId','$total','$otherData')";
     $result = mysqli_query($CON,$sql);
     if ($result) {
         $paymentID = mysqli_insert_id($CON);
         // $sql = "UPDATE ordersmade SET status='paid' WHERE orderID = '$orderID'";
-        $sql = "UPDATE product SET isVerified = '1' WHERE productID = '$productID'";
+        $sql = "UPDATE property SET isVerified = 'pending' WHERE propertyID = '$propertyId'";
         $result = mysqli_query($CON, $sql);
-        
-        $num = mysqli_num_rows($result);
-    
-        if ($num == 0) {
-            return null;
-        }else{
-            $row = mysqli_fetch_assoc($result);
-            return $paymentID;
-        }
-    
+            
+     
         if ($result){
             echo json_encode(
                 array(
@@ -169,10 +161,10 @@ if ($result) {
 
 
 
-function checkPaymentStatus($productID){
+function checkPaymentStatus($propertyId){
 global $CON;
 
-    $sql = "SELECT * FROM product where productID = '$productID'";
+    $sql = "SELECT * FROM property where propertyId = '$propertyId'";
 $result = mysqli_query($CON,$sql);
 $num = mysqli_num_rows($result);
 

@@ -82,10 +82,10 @@ if (
 
 
      // top 5 categories with total property
-$sql = "SELECT c.catID, c.title, COUNT(p.propertyID) AS total_properties
+$sql = "SELECT c.categoryID, c.categoryname, COUNT(p.propertyID) AS total_properties
 FROM category c
-LEFT JOIN property p ON c.catID = p.category
-GROUP BY c.catID, c.title
+LEFT JOIN property p ON c.categoryID = p.category
+GROUP BY c.categoryID, c.categoryName
 ORDER BY total_properties desc
 limit 3
 ";

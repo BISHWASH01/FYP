@@ -5,17 +5,16 @@ include './Helpers/Authentication.php';
 
 // Check if the required POST parameters are set
 if ($_POST['propertyID']) {
-    $title = $_POST['title'];
-    $description = $_POST['description'];
-    $price = $_POST['price'];
     $propertyID = $_POST['propertyID'];
 
+
+
     // Prepare the SQL statement with placeholders
-    $sql = "UPDATE property SET propertyName = ?, propertyDescription = ?, price = ? WHERE propertyID = ?";
+    $sql = "UPDATE property SET isVerified = 'verified' WHERE propertyID = ?";
     
     // Prepare and bind parameters
     $stmt = $CON->prepare($sql);
-    $stmt->bind_param("ssdi", $title, $description, $price, $propertyID);
+    $stmt->bind_param("i", $propertyID);
 
     // Execute the statement
     if ($stmt->execute()) {

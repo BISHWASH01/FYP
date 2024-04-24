@@ -7,11 +7,11 @@ include './Helpers/Authentication.php';
 if (
 
     isset($_POST['token']) &&
-    isset($_POST['catID'])
+    isset($_POST['categoryID'])
 
 ) {
     $token = $_POST['token'];
-    $catID = $_POST['catID'];
+    $categoryID = $_POST['categoryID'];
 
     $isAdmin = isAdmin($token);
 
@@ -29,7 +29,7 @@ if (
     global $CON;
 
 
-    $sql = "delete from category where catID = '$catID'";
+    $sql = "delete from category where categoryID = '$categoryID'";
 
     $result = mysqli_query($CON, $sql);
 

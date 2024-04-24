@@ -17,10 +17,10 @@ $userID = getUserID($token);
     $response = [
         "success" => false,
         "message" => "No data found",
-        // "residential" => [],
-        // "commercial" => [],
-        // "industrial" => [],
-        // "land" => []
+        "residential" => [],
+        "commercial" => [],
+        "industrial" => [],
+        "land" => []
     ];
     
     // Check if any data was found and adjust the response accordingly
